@@ -1,0 +1,32 @@
+README
+1、进入gpl-master文件夹： cd gpl-master
+2、执行命令： make
+3、进入sample文件夹：cd sample
+4、执行文法分析： ../gpl filename -lex (例如文件名是calc.gpl 则执行命令： ../gpl calc -lex)
+5、查看文件内容： cat filename.lex
+
+关于符号表的实现：
+typedef struct strTable
+{
+	char *p;
+	struct strTable *next;
+}STABLE;
+ 利用单向链表实现，这是标识符表。p指针指向的是存储标识符字面量的地址 0x0******，next指针指向的是符号表的下一个元素；
+ 输出：STABLE *wordTable； printf("(%s,%d,%p,)",wordTable->p,IDENTIFIER,wordTable->p);
+ 
+typedef struct iTable
+{
+	int *p;
+	struct iTable *next;
+}ITABLE;
+这是整型常数表，表中存的是int类型的指针，指向常数存储的地址；next指向下一个元素的地址；
+输出： ITABLE *intTable;   printf("(%d,%p,%p)",*(intTable->p),INTEGER,intTable->p);
+
+typedef struct cStrTable
+{
+	char *p;
+	struct cStrTable *next;
+}CSTABLE;
+字符常数表：参考标识符表；
+
+错误处理：例如** // */ ;, ,; 等错误能够被发现。
