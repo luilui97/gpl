@@ -2225,7 +2225,7 @@ int yylex()
 		else if(character==';'||character==','||character=='+'||character=='-'||character=='*'||character=='/')
 		{
 			yyerror("=");
-			exit(-1);
+			exit(1);
 		}
 		else
 		{
@@ -2248,7 +2248,7 @@ int yylex()
 		else if(character==';'||character==','||character=='+'||character=='-'||character=='*'||character=='/')
 		{
 			yyerror("!");
-			exit(-1);
+			exit(1);
 		}
 		else
 		{
@@ -2274,7 +2274,7 @@ int yylex()
 		else if(character==';'||character==','||character=='+'||character=='-'||character=='*'||character=='/')
 		{
 			yyerror("<");
-			exit(-1);
+			exit(1);
 		}
 		else
 		{
@@ -2297,7 +2297,7 @@ int yylex()
 		else if(character==';'||character==','||character=='+'||character=='-'||character=='*'||character=='/')
 		{
 			yyerror(">");
-			exit(-1);
+			exit(1);
 		}
 		else
 		{
@@ -2314,7 +2314,7 @@ int yylex()
 		if(character==','||character=='+'||character=='-'||character=='*'||character=='/')
 		{
 			yyerror(";");
-			exit(-1);
+			exit(1);
 		}
 		printf("(24,-)\n");
 		return ';';
@@ -2327,7 +2327,7 @@ int yylex()
 		if(character==';'||character==','||character=='+'||character=='-'||character=='*'||character=='/')
 		{
 			yyerror(",");
-			exit(-1);
+			exit(1);
 		}
 		else
 		{
@@ -2336,6 +2336,52 @@ int yylex()
 			return ',';
 		}
 		
+	}
+
+	if(character=='*')
+	{
+		concat();
+		getch();
+		if(character=='*'||character=='/')
+		{
+			yyerror("*");
+			exit(1);
+		}
+		else
+		{
+			retract();
+			printf("(12,-)\n");
+			return '*';
+		}
+	}
+
+	if(character=='/')
+	{
+		concat();
+		getch();
+		if(character=='*'||character=='/')
+		{
+			yyerror("/");
+			exit(1);
+		}
+		else
+		{
+			retract();
+			printf("(13,-)\n");
+			return '/';
+		}
+	}
+
+	if(character=='+')
+	{
+		printf("(10,-)\n");
+		return character;
+	}
+
+	if(character=='-')
+	{
+		printf("(11,-)\n");
+		return character;
 	}
 
 	if(character=='(')
@@ -2373,6 +2419,8 @@ int yylex()
 		printf("(29,-)\n");
 		return character;
 	}
+
+	
 	return character;	
 }
 
